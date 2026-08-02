@@ -1,0 +1,11 @@
+node_modules
+.next
+out
+.env*.local
+npm-debug.log*
+.DS_Store
+*.pem
+.vercel
+
+# Berkas yang dipindahkan untuk dihapus manual (Cowork tidak bisa unlink di mount ini).
+_to_delete/

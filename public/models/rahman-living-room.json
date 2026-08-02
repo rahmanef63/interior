@@ -1,0 +1,271 @@
+{
+ "schema": "rahman3d.walkthrough",
+ "version": "1.1.0",
+ "exportedAt": "2026-07-28T00:00:00.000Z",
+ "content": {
+  "config": {
+   "fov": 50,
+   "introFraction": 0.1,
+   "intro": {
+    "pos": [
+     0.15,
+     13.0,
+     0.3
+    ],
+    "look": [
+     0.15,
+     0.0,
+     -0.3
+    ]
+   },
+   "waypoints": [
+    {
+     "pos": [
+      -2.15,
+      1.58,
+      -2.15
+     ],
+     "look": [
+      -2.45,
+      0.95,
+      -0.3
+     ],
+     "room": 0
+    },
+    {
+     "pos": [
+      -1.1,
+      1.5,
+      -1.55
+     ],
+     "look": [
+      -2.55,
+      0.85,
+      0.1
+     ],
+     "room": 0
+    },
+    {
+     "pos": [
+      0.4,
+      1.4,
+      -0.85
+     ],
+     "look": [
+      -2.3,
+      0.75,
+      0.1
+     ],
+     "room": 0
+    },
+    {
+     "pos": [
+      0.85,
+      1.15,
+      0.6
+     ],
+     "look": [
+      -1.4,
+      0.5,
+      0.1
+     ],
+     "room": 0
+    },
+    {
+     "pos": [
+      1.95,
+      1.45,
+      1.55
+     ],
+     "look": [
+      0.8,
+      0.95,
+      2.4
+     ],
+     "room": 0
+    },
+    {
+     "pos": [
+      2.45,
+      1.6,
+      -0.55
+     ],
+     "look": [
+      -1.6,
+      0.95,
+      0.2
+     ],
+     "room": 0
+    }
+   ],
+   "concepts": [
+    0
+   ]
+  },
+  "CONCEPTS": [
+   {
+    "name": "Warm Minimal",
+    "pal": {
+     "wall": "#efebe3",
+     "wood": "#d4b890",
+     "uph": "#f2eee7",
+     "rug": "#e2dbcf",
+     "accent": "#db9a76",
+     "metal": "#d8bf7a",
+     "stone": "#837d73"
+    }
+   },
+   {
+    "name": "Japandi",
+    "pal": {
+     "wall": "#f1efec",
+     "wood": "#dbcdb8",
+     "uph": "#eeede9",
+     "rug": "#e8e6e2",
+     "accent": "#b8bfb2",
+     "metal": "#a09f9a",
+     "stone": "#656360"
+    }
+   },
+   {
+    "name": "Editorial",
+    "pal": {
+     "wall": "#e9e6e0",
+     "wood": "#97806d",
+     "uph": "#f4f1eb",
+     "rug": "#cac4bc",
+     "accent": "#deaf65",
+     "metal": "#e5cd8b",
+     "stone": "#585655"
+    }
+   }
+  ],
+  "ROOMS": [
+   {
+    "name": "The Living Room"
+   }
+  ],
+  "PLAN": [
+   {
+    "x": 0.15,
+    "z": -0.3,
+    "name": "Living"
+   }
+  ],
+  "HOTSPOTS": [
+   {
+    "room": 0,
+    "x": -2.602,
+    "y": 0.952,
+    "z": 0.1,
+    "title": "Sofa tiga dudukan",
+    "meta": "Linen tenun rapat · 94 × 220 × 90 cm"
+   },
+   {
+    "room": 0,
+    "x": -1.38,
+    "y": 0.545,
+    "z": 0.1,
+    "title": "Meja kopi",
+    "meta": "Walnut solid · 66 × 118 × 50 cm"
+   },
+   {
+    "room": 0,
+    "x": 1.55,
+    "y": 0.859,
+    "z": -0.95,
+    "title": "Kursi santai",
+    "meta": "Linen, panel samping penuh · 78 × 74 × 81 cm"
+   },
+   {
+    "room": 0,
+    "x": 0.85,
+    "y": 1.13,
+    "z": 2.39,
+    "title": "Konsol dinding",
+    "meta": "Walnut · 186 × 44 × 108 cm"
+   },
+   {
+    "room": 0,
+    "x": -2.75,
+    "y": 1.82,
+    "z": 1.58,
+    "title": "Lampu lantai",
+    "meta": "Kap linen · 42 × 42 × 177 cm"
+   },
+   {
+    "room": 0,
+    "x": 2.415,
+    "y": 1.703,
+    "z": 2.041,
+    "title": "Tanaman pot",
+    "meta": "Pot terakota · 89 × 64 × 165 cm"
+   },
+   {
+    "room": 0,
+    "x": -1.725,
+    "y": 0.068,
+    "z": 0.1,
+    "title": "Karpet wol",
+    "meta": "Wol tenun datar · 225 × 285 × 2 cm"
+   },
+   {
+    "room": 0,
+    "x": 1.0,
+    "y": 2.2,
+    "z": 2.6,
+    "title": "Bingkai dinding",
+    "meta": "Bingkai kayu dicat · 142 × 4 × 86 cm"
+   },
+   {
+    "room": 0,
+    "x": 1.55,
+    "y": 0.04,
+    "z": 0.85,
+    "title": "Lantai oak",
+    "meta": "Papan oak · 626 × 526 × 2 cm"
+   },
+   {
+    "room": 0,
+    "x": 3.1,
+    "y": 2.72,
+    "z": -0.05,
+    "title": "Jendela",
+    "meta": "Kusen baja · 14 × 390 × 233 cm"
+   }
+  ],
+  "ROOM_COLORS": [
+   "#c2592b"
+  ],
+  "DAYLIGHT": {
+   "Soft": {
+    "sun": 2.2,
+    "sunC": "#fff1da",
+    "hemi": 0.52,
+    "bg": "#e9e3d8",
+    "exp": 1.05
+   },
+   "Bright": {
+    "sun": 3.1,
+    "sunC": "#fffaf0",
+    "hemi": 0.74,
+    "bg": "#f1ece2",
+    "exp": 1.12
+   },
+   "Dusk": {
+    "sun": 1.6,
+    "sunC": "#ffc88f",
+    "hemi": 0.36,
+    "bg": "#d8ccbd",
+    "exp": 0.95
+   }
+  },
+  "BRAND": {
+   "wordmark": "RAHMAN 3D INTERIOR",
+   "tagline": "Interactive 3D Walkthrough",
+   "accent": "#c2592b",
+   "ink": "#2b2620",
+   "paper": "#e9e3d8"
+  }
+ }
+}

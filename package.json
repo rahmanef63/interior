@@ -1,0 +1,27 @@
+{
+  "name": "rahman-3d-interior",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Scroll-driven 3D interior walkthrough (Next.js App Router + three.js).",
+  "scripts": {
+    "dev": "next dev",
+    "build": "node scripts/build.mjs",
+    "build:next": "next build",
+    "start": "next start",
+    "lint": "next lint",
+    "check": "node scripts/check.mjs",
+    "vendor:decoders": "node scripts/vendor-decoders.mjs",
+    "audit:path": "node scripts/audit-path.mjs",
+    "probe:shot": "node scripts/probe-shot.mjs"
+  },
+  "dependencies": {
+    "@auth/core": "^0.41.2",
+    "@convex-dev/auth": "^0.0.94",
+    "@convex-dev/rate-limiter": "^0.3.2",
+    "convex": "^1.42.2",
+    "next": "^15.5.20",
+    "react": "^19.2.7",
+    "react-dom": "^19.2.7",
+    "three": "^0.160.0"
+  }
+}

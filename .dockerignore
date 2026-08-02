@@ -1,0 +1,17 @@
+node_modules
+.next
+.git
+.gitignore
+npm-debug.log*
+.DS_Store
+README.md
+
+# Dockerfile does `COPY . .`, so anything listed in .gitignore as "local secrets"
+# would otherwise land in the build context and the intermediate builder layer —
+# and next build would read it. CONVEX_DEPLOY_KEY lives in .env.local.
+.env*.local
+
+# Not needed to build or run the image.
+docs
+*.md
+interior-backups

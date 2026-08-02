@@ -1,0 +1,24 @@
+# Line endings are normalised in the repo (LF) and left native in the working
+# tree. Without this, a checkout on Windows (autocrlf=true) and a checkout on
+# Linux disagree byte-for-byte and `git status` reports every file as modified —
+# which is exactly what happened while auditing this repo.
+* text=auto
+
+# Binaries MUST be exempt. The Draco and Basis decoders under public/ are wasm;
+# a CRLF conversion would corrupt them silently — the file still loads, the
+# decoder just fails at runtime with an unhelpful message.
+*.wasm  binary
+*.glb   binary
+*.gltf  binary
+*.png   binary
+*.jpg   binary
+*.jpeg  binary
+*.webp  binary
+*.ico   binary
+*.woff  binary
+*.woff2 binary
+*.ttf   binary
+*.zip   binary
+
+# Keep shell scripts LF regardless of platform — CRLF breaks the shebang.
+*.sh    text eol=lf

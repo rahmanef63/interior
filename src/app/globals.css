@@ -1,0 +1,185 @@
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+html,
+body {
+  margin: 0;
+  padding: 0;
+  background: #e9e3d8;
+  overflow-x: hidden;
+}
+
+canvas {
+  display: block;
+}
+
+/* hero scroll-cue + hotspot pulse */
+@keyframes r3i-bounce {
+  0%, 100% { transform: translateY(0); opacity: 0.5; }
+  50% { transform: translateY(7px); opacity: 1; }
+}
+@keyframes r3i-pulse {
+  0% { box-shadow: 0 0 0 0 rgba(43, 38, 32, 0.35); }
+  70% { box-shadow: 0 0 0 12px rgba(43, 38, 32, 0); }
+  100% { box-shadow: 0 0 0 0 rgba(43, 38, 32, 0); }
+}
+
+/* camera-tuner panel controls (built imperatively by CameraTuner) */
+.r3i-tn input[type='range'] {
+  -webkit-appearance: none;
+  appearance: none;
+  height: 3px;
+  background: #4a463f;
+  border-radius: 2px;
+  outline: none;
+}
+.r3i-tn input[type='range']::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  width: 13px;
+  height: 13px;
+  border-radius: 50%;
+  background: #e6c98a;
+  cursor: pointer;
+}
+.r3i-tn input[type='number'] {
+  background: #26241f;
+  border: 1px solid #46423a;
+  color: #e9e3d8;
+  font: 11px var(--font-sans), monospace;
+  border-radius: 3px;
+  padding: 3px 5px;
+  width: 62px;
+  outline: none;
+}
+.r3i-tn input[type='number']:focus {
+  border-color: #e6c98a;
+}
+
+
+/* ---------------------------------------------------------------------
+   Visible focus. HeaderAuth's inputs set `outline: none` inline and nothing
+   replaced it, so keyboard users could not see where focus was in the sign-in
+   form. This restores a ring for keyboard navigation only (:focus-visible), so
+   mouse users see no change.
+   --------------------------------------------------------------------- */
+:where(a, button, input, select, textarea, [tabindex]):focus-visible {
+  outline: 2px solid #a54c25;
+  outline-offset: 2px;
+  border-radius: 3px;
+}
+/* The tuner's dark panel needs a light ring to stay visible. */
+.r3i-tn :where(input, button):focus-visible {
+  outline: 2px solid #e6c98a;
+  outline-offset: 2px;
+}
+
+/* Anchor jumps landed under the sticky header (~60-70px) on the home page. */
+section[id],
+[id]:target {
+  scroll-margin-top: 5rem;
+}
+
+/* Respect the OS reduced-motion setting: stop the looping cues + smooth scroll
+   (the scroll-cue bounce, hotspot pulse, and CSS transitions). */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.001ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.001ms !important;
+    scroll-behavior: auto !important;
+  }
+}
+
+/* Mobile HUD fit.
+   The tour's chrome is laid out for desktop corners; on a phone the three fixed
+   layers land on top of each other and the 3D — the thing the page exists to
+   show — ends up as a sliver between overlays.
+   !important is required only because these panels are inline-styled (an inline
+   display:flex / max-width otherwise wins over a class).
+   ponytail: one CSS breakpoint, no JS/matchMedia; desktop is byte-identical. */
+@media (max-width: 640px), (max-height: 520px) {
+  /* The viewer bar is small now that export/import/samples live in /editor — it
+     is a badge, an Edit link and the occasional message. It no longer needs the
+     bottom docking strip it had when it carried the whole authoring panel. */
+  .r3i-io {
+    top: calc(10px + env(safe-area-inset-top, 0px)) !important;
+    right: 10px !important;
+    left: auto !important;
+    max-width: 62vw !important;
+    align-items: flex-end !important;
+  }
+
+  /* Room nav: was a vertical stack in the right gutter, landing straight on the
+     concept buttons. It becomes a horizontal row under the wordmark instead.
+     The bottom of a phone screen is already the panel's — room number, title,
+     concept line, six buttons — and putting the nav there just moved the
+     collision rather than fixing it. The top strip is empty and unambiguous. */
+  .r3i-nav {
+    top: 96px !important;
+    bottom: auto !important;
+    right: 12px !important;
+    left: 16px !important;
+    transform: none !important;
+    height: auto !important;
+    flex-direction: row !important;
+    justify-content: flex-start !important;
+    gap: 16px;
+    flex-wrap: wrap;
+  }
+  /* The dot sits after the label on desktop; in a row that reads as a bullet for
+     the NEXT item, so put it in front. */
+  .r3i-nav > button { flex-direction: row-reverse !important; gap: 7px !important; }
+
+  /* Concept + Light: full width, above the nav row, no longer clipped by the
+     440px desktop max-width. */
+  .r3i-panel {
+    left: 16px !important;
+    right: 16px !important;
+    max-width: none !important;
+    bottom: calc(20px + env(safe-area-inset-bottom, 0px)) !important;
+  }
+
+  /* The wordmark block is display type sized for a 1440px sheet. */
+  .r3i-wordmark { top: 14px !important; left: 16px !important; }
+  .r3i-wordmark .r3i-mark { font-size: 15px !important; letter-spacing: 0.12em !important; }
+  .r3i-wordmark .r3i-tag { font-size: 8px !important; letter-spacing: 0.24em !important; margin-top: 4px !important; }
+}
+
+/* Notch / home-indicator safe areas for the tour's fixed chrome. */
+@supports (padding: env(safe-area-inset-left)) {
+  .r3i-wordmark { padding-left: env(safe-area-inset-left, 0px); }
+  .r3i-nav { padding-right: env(safe-area-inset-right, 0px); }
+}
+
+
+
+/* ── editor: stacked layout on narrow screens ────────────────────────────────
+   The editor is a CAD layout — tools on top, tree left, properties right — and
+   that cannot honestly become a phone layout. What it CAN do is stop being
+   broken: below 900 px the columns stack with the viewport first, the panels
+   scroll underneath, and the page scrolls (the desktop layout locks body scroll
+   so the wheel belongs to the camera; here that would bury the panels).        */
+@media (max-width: 900px) {
+  .r3i-ed-root { height: auto; }
+  .r3i-ed-body {
+    grid-template-columns: 1fr !important;
+    grid-template-rows: auto auto auto;
+  }
+  .r3i-ed-view {
+    order: -1;
+    height: 58svh;
+    min-height: 320px;
+  }
+  .r3i-ed-left,
+  .r3i-ed-right {
+    border-left: none !important;
+    border-right: none !important;
+    border-top: 1px solid rgba(43, 38, 32, 0.16);
+    overflow: visible;
+  }
+}
