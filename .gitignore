@@ -9,3 +9,6 @@ npm-debug.log*
 
 # Berkas yang dipindahkan untuk dihapus manual (Cowork tidak bisa unlink di mount ini).
 _to_delete/
+
+# Local MSO runtime state — never commit
+.mso/
