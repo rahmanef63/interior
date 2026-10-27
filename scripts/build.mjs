@@ -1,6 +1,6 @@
 // Build entry point. One command that ships both halves of the app.
 //
-// Before this, `npm run build` only built the frontend, and pushing the backend
+// Before this, `bun run build` only built the frontend, and pushing the backend
 // was a thing you had to remember:
 //
 //     env -u CONVEX_URL -u CONVEX_SITE_URL -u CONVEX_DEPLOY_KEY npx convex deploy -y
@@ -27,7 +27,7 @@
 //                                against is real, but a guard that leaves you
 //                                with no way through is a guard people work
 //                                around by deleting it.
-//   not set, otherwise         → warn, build frontend only (local `npm run build`)
+//   not set, otherwise         → warn, build frontend only (local `bun run build`)
 import { spawnSync } from 'child_process';
 import { createRequire } from 'module';
 import { existsSync } from 'fs';
@@ -57,12 +57,12 @@ const finish = (r) => {
 const runExe = (exe, args) => finish(spawnSync(exe, args, { stdio: 'inherit' }));
 
 /**
- * Spawn an npm-family shim (`npm`, `npx`).
+ * Spawn a package-manager shim (`bun`, `npx`).
  *
  * On Windows these are `.cmd` files, and Node >= 18.20 refuses to execute those
  * without a shell (the CVE-2024-27980 fix), so `shell: true` is forced there —
  * and with `shell: true` Node joins argv with plain spaces and does NO quoting.
- * That is exactly what broke this script: `['--cmd', 'npm run build:next']`
+ * That is exactly what broke this script: `['--cmd', 'bun run build:next']`
  * reached the Convex CLI as three separate tokens, and it refused with
  *
  *     error: too many arguments for 'deploy'. Expected 0 arguments but got 2.
@@ -95,7 +95,7 @@ const convexBin = (() => {
 
 const DEPLOY_ARGS = [
   'deploy',
-  '--cmd', 'npm run build:next',
+  '--cmd', 'bun run build:next',
   '--cmd-url-env-var-name', 'NEXT_PUBLIC_CONVEX_URL',
 ];
 
@@ -105,14 +105,14 @@ const skip = process.env.CONVEX_SKIP_DEPLOY === '1';
 
 // The contract self-check is fast and assert-based; it existed but nothing ever
 // ran it, so a regression could only be caught by someone remembering to type
-// `npm run check`. Gate the build on it.
+// `bun run check`. Gate the build on it.
 console.log('\n▸ contract self-check');
 runExe(process.execPath, ['scripts/check.mjs']);
 
 if (hasKey) {
   console.log('\n▸ convex deploy + next build');
   if (convexBin) runExe(process.execPath, [convexBin, ...DEPLOY_ARGS]);
-  else runShim('npx', ['convex', ...DEPLOY_ARGS]); // convex not installed locally
+  else runShim('bunx', ['convex', ...DEPLOY_ARGS]); // convex not installed locally
 } else if (skip) {
   console.warn(
     '\n! CONVEX_SKIP_DEPLOY=1 — building the FRONTEND ONLY, deliberately.\n'
@@ -120,7 +120,7 @@ if (hasKey) {
     + '  if the deployed backend already has every function and table this\n'
     + '  frontend calls. NEXT_PUBLIC_CONVEX_URL comes from .env.production.\n'
   );
-  runShim('npm', ['run', 'build:next']);
+  runShim('bun', ['run', 'build:next']);
 } else if (required) {
   console.error(
     '\n✗ CONVEX_DEPLOY_KEY is not set, but CONVEX_REQUIRE_DEPLOY=1.\n'
@@ -143,5 +143,5 @@ if (hasKey) {
     + '  The Convex backend is NOT being pushed. Fine for a local build;\n'
     + '  NEXT_PUBLIC_CONVEX_URL falls back to .env.production.\n'
   );
-  runShim('npm', ['run', 'build:next']);
+  runShim('bun', ['run', 'build:next']);
 }

@@ -2,6 +2,7 @@
   "name": "rahman-3d-interior",
   "version": "1.0.0",
   "private": true,
+  "packageManager": "bun@1.4.2",
   "description": "Scroll-driven 3D interior walkthrough (Next.js App Router + three.js).",
   "scripts": {
     "dev": "next dev",

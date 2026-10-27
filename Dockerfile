@@ -1,6 +1,6 @@
 # Next.js standalone — multi-stage.
 #
-# The builder now also pushes the Convex backend (`npm run build` →
+# The builder now also pushes the Convex backend (`bun run build` →
 # scripts/build.mjs → `convex deploy --cmd`), so one image build ships both
 # halves and NEXT_PUBLIC_CONVEX_URL is taken from the deploy key rather than
 # from .env.production.
@@ -23,11 +23,15 @@
 # CONVEX_REQUIRE_DEPLOY=1 makes a missing key a hard build failure instead of
 # silently producing a frontend built against an un-pushed backend.
 FROM node:20-alpine AS deps
+# bun is the package manager (packageManager: bun@1.4.2); borrow the binary so the
+# runtime stays on node:alpine.
+COPY --from=oven/bun:1.4.2-alpine /usr/local/bin/bun /usr/local/bin/bun
 WORKDIR /app
-COPY package.json package-lock.json* ./
-RUN npm ci --legacy-peer-deps
+COPY package.json bun.lock ./
+RUN bun install --frozen-lockfile
 
 FROM node:20-alpine AS builder
+COPY --from=oven/bun:1.4.2-alpine /usr/local/bin/bun /usr/local/bin/bun
 WORKDIR /app
 COPY --from=deps /app/node_modules ./node_modules
 COPY . .
@@ -52,7 +56,7 @@ RUN --mount=type=secret,id=convex_deploy_key \
     if [ -n "$CONVEX_DEPLOY_KEY" ]; then echo "   build arg CONVEX_DEPLOY_KEY        : present"; \
     else echo "   build arg CONVEX_DEPLOY_KEY        : absent"; fi; \
     if [ -n "$SECRET" ]; then KEY="$SECRET"; else KEY="$CONVEX_DEPLOY_KEY"; fi; \
-    CONVEX_DEPLOY_KEY="$KEY" CONVEX_SKIP_DEPLOY="$CONVEX_SKIP_DEPLOY" npm run build
+    CONVEX_DEPLOY_KEY="$KEY" CONVEX_SKIP_DEPLOY="$CONVEX_SKIP_DEPLOY" bun run build
 
 FROM node:20-alpine AS runner
 WORKDIR /app

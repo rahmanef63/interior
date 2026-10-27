@@ -29,7 +29,7 @@ everywhere.
   SketchUp's semantics, a CAD toolbar, a ViewCube, and camera Scenes authored by
   eye. Behind a sign-in wall. See §7.
 - First-party analytics (Convex counters, no vendor/cookies), per-project OG cards,
-  sitemap/robots, `npm run check` (runs the contract self-check).
+  sitemap/robots, `bun run check` (runs the contract self-check).
 - Super-admin camera tuner unlocked at runtime on `/tour` (email allowlist).
 
 **Deliberately not built:** in-app hotspot editing (config + tuner cover it), `/work`
@@ -54,11 +54,11 @@ case studies (no real projects — would re-add fake facts), CMS/i18n/e-commerce
 ## 2. Run it locally
 
 ```bash
-npm install
-npm run dev        # http://localhost:3000  (cloud features need NEXT_PUBLIC_CONVEX_URL)
-npm run check      # assert-based contract self-check (round-trip + tamper cases)
-npm run build      # contract check → convex deploy → next build
-npm run build:next # frontend only, no backend push
+bun install
+bun run dev        # http://localhost:3000  (cloud features need NEXT_PUBLIC_CONVEX_URL)
+bun run check      # assert-based contract self-check (round-trip + tamper cases)
+bun run build      # contract check → convex deploy → next build
+bun run build:next # frontend only, no backend push
 ```
 
 ### If the Dokploy build fails on the deploy key
@@ -89,8 +89,8 @@ push and says so loudly. It is safe only when the deployed backend already has
 every function and table the frontend calls — which, after a release that adds a
 Convex table, it does not.
 
-**`npm run build` deploys the Convex backend.** `scripts/build.mjs` runs
-`convex deploy --cmd 'npm run build:next' --cmd-url-env-var-name NEXT_PUBLIC_CONVEX_URL`,
+**`bun run build` deploys the Convex backend.** `scripts/build.mjs` runs
+`convex deploy --cmd 'bun run build:next' --cmd-url-env-var-name NEXT_PUBLIC_CONVEX_URL`,
 so one command pushes the functions/schema and builds the frontend against the URL
 that deploy key points at — the frontend can no longer be built against a different
 deployment than the one just pushed to.
@@ -316,7 +316,7 @@ hex; `DAYLIGHT` has all three of `Soft`/`Bright`/`Dusk`. Array caps: waypoints 5
 256, ROOMS 64, CONCEPTS 32, PLAN 128, ROOM_COLORS 64.
 
 Full field tables + the error-string catalogue live in the `contract.js` JSDoc — the code is
-the source of truth; `npm run check` runs its round-trip + tamper self-check.
+the source of truth; `bun run check` runs its round-trip + tamper self-check.
 
 ---
 
@@ -337,7 +337,7 @@ the source of truth; `npm run check` runs its round-trip + tamper self-check.
 
   The builder sets `CONVEX_REQUIRE_DEPLOY=1`, so a missing key fails the build loudly
   instead of quietly producing a frontend against a stale backend.
-- **`npm run check` now gates the build** — the contract self-check runs first and a
+- **`bun run check` now gates the build** — the contract self-check runs first and a
   regression stops the build. It used to exist but nothing ever ran it.
 - **Never regress these** (all shipped and broke the tour before, documented in project memory):
   don't code-split `<Walkthrough>` behind `next/dynamic({ssr:false})`; keep the `/tour`
@@ -475,8 +475,8 @@ Convex, so `Authenticated` can never be true there. `/dev-editor` mounts the sam
 `EDITOR_TEST_HARNESS=1`**:
 
 ```bash
-EDITOR_TEST_HARNESS=1 npm run build:next   # /dev-editor exists
-npm run build:next                          # /dev-editor is a 404 (verified)
+EDITOR_TEST_HARNESS=1 bun run build:next   # /dev-editor exists
+bun run build:next                          # /dev-editor is a 404 (verified)
 ```
 
 The gate itself is tested against the real route: an unauthenticated visitor must
@@ -490,7 +490,7 @@ get the wall, not a canvas.
 scroll past without stopping. Measure instead of squinting:
 
 ```bash
-npm run audit:path              # report
+bun run audit:path              # report
 node scripts/audit-path.mjs --suggest   # + candidate fixes for the flagged ones
 ```
 

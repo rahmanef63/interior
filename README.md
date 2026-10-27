@@ -73,9 +73,9 @@ interior/
 ## Run it
 
 ```bash
-npm install
-npm run dev        # http://localhost:3000 (needs NEXT_PUBLIC_CONVEX_URL for cloud features)
-npm run check      # assert-based self-checks (contract round-trip + tamper cases)
+bun install
+bun run dev        # http://localhost:3000 (needs NEXT_PUBLIC_CONVEX_URL for cloud features)
+bun run check      # assert-based self-checks (contract round-trip + tamper cases)
 ```
 
 > `Walkthrough.jsx` is a client component — it owns a WebGL context and scroll
