@@ -1,6 +1,7 @@
 'use client';
 
 import { useEffect, useRef, useState, useCallback } from 'react';
+import Link from 'next/link';
 import * as THREE from 'three';
 import { WalkthroughEngine } from '../lib/three/walkthroughEngine.js';
 import { UNITS, UNIT_BY_KEY, DEFAULT_UNIT } from '../config/units.js';
@@ -90,11 +91,13 @@ export default function Walkthrough({
   // a canvas whose prior context was disposed/force-lost — the rebuild would throw
   // "Cannot read properties of null (reading 'precision')" and blank the tour (this
   // fires for any returning visitor whose saved draft triggers a rebuild on mount).
-  const contentSeenRef = useRef(content);
-  const canvasKeyRef = useRef(0);
-  if (contentSeenRef.current !== content) {
-    contentSeenRef.current = content;
-    canvasKeyRef.current += 1;
+  // Generation counter drives the canvas key. Adjusting state during render (the
+  // documented "derive from props" pattern) is legal where a ref mutation is not.
+  const [canvasGen, setCanvasGen] = useState(0);
+  const [seenContent, setSeenContent] = useState(content);
+  if (seenContent !== content) {
+    setSeenContent(content);
+    setCanvasGen(canvasGen + 1);
   }
 
   const [ioError, setIoError] = useState(null);
@@ -105,7 +108,9 @@ export default function Walkthrough({
   const [busy, setBusy] = useState(false);
   const [dl, setDl] = useState(daylight); // user-switchable daylight preset
   const dlRef = useRef(daylight);
-  dlRef.current = dl;
+  // Sync in an effect, not during render (React 19 forbids ref writes in render).
+  // Declared before the engine-rebuild effect, so it lands first on every commit.
+  useEffect(() => { dlRef.current = dl; }, [dl]);
   // prefers-reduced-motion: hold the scroll-driven tour behind an explicit opt-in
   const [motionOk, setMotionOk] = useState(false);
   const [motionGate, setMotionGate] = useState(false);
@@ -138,6 +143,9 @@ export default function Walkthrough({
   // still looking at a house unit.
   const [unitKey, setUnitKey] = useState(DEFAULT_UNIT);
 
+  /* eslint-disable react-hooks/set-state-in-effect -- location.search is browser-only:
+     reading it during render would desync server and client HTML (see the hydration
+     note above). This effect is the correct place, so the rule does not apply here. */
   useEffect(() => {
     const q = new URLSearchParams(window.location.search);
     const p = q.get('p');
@@ -147,6 +155,7 @@ export default function Walkthrough({
     const u = UNIT_BY_KEY[q.get('unit')];
     if (u) { setUnitKey(u.key); setContent(u.content); }
   }, []);
+  /* eslint-enable react-hooks/set-state-in-effect */
 
   /**
    * Switch showroom unit. Rebuilds the engine (fresh content identity → fresh
@@ -174,6 +183,7 @@ export default function Walkthrough({
   useEffect(() => {
     if (!canvasRef.current) return undefined;
     if (!motionOk && window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+      // eslint-disable-next-line react-hooks/set-state-in-effect -- matchMedia is a browser-only probe; the gate must be decided after hydration
       setMotionGate(true); // reduced-motion visitors opt in before the engine builds
       return undefined;
     }
@@ -228,10 +238,11 @@ export default function Walkthrough({
     const q = new URLSearchParams(window.location.search);
     if (!q.get('p') && !q.get('demo') && !q.get('unit')) {
       const local = loadLocal();
+      // eslint-disable-next-line react-hooks/set-state-in-effect -- localStorage is browser-only; restoring the draft cannot happen during render
       if (local) { setContent(local); setUnitKey(null); }
     }
     didRestoreRef.current = true;
-    // eslint-disable-next-line react-hooks/exhaustive-deps
+     
   }, []);
 
   // GUEST autosave: debounced snapshot to localStorage. Skipped while viewing a
@@ -249,6 +260,7 @@ export default function Walkthrough({
   useEffect(() => {
     if (!loadSlug || loaded === undefined || appliedSlugRef.current === loadSlug) return;
     appliedSlugRef.current = loadSlug;
+    // eslint-disable-next-line react-hooks/set-state-in-effect -- Convex query results arrive after hydration; surfacing the not-found case cannot be derived in render
     if (loaded === null) { setIoError('Shared project not found.'); return; }
     const r = validateProject(loaded.bundle);
     if (!r.ok) { setIoError('Shared project invalid:\n' + r.errors.join('\n')); return; }
@@ -333,6 +345,7 @@ export default function Walkthrough({
     if (!demoKey || !engineRef.current || appliedDemoRef.current === demoKey) return;
     const sample = SAMPLES.find((s) => s.key === demoKey);
     appliedDemoRef.current = demoKey;
+    // eslint-disable-next-line react-hooks/set-state-in-effect -- unknown ?demo= key is only knowable after the engine exists (browser-only)
     if (!sample) { setIoError('Unknown demo: ' + demoKey); return; }
     loadSample(sample);
     // motionOk: a reduced-motion visitor has no engine until they opt in, so the
@@ -354,7 +367,7 @@ export default function Walkthrough({
   return (
     <div style={{ position: 'relative', width: '100%', height: '720dvh', minHeight: '720vh', background: BRAND.paper }}>
       <canvas
-        key={canvasKeyRef.current}
+        key={canvasGen}
         ref={canvasRef}
         role="img"
         aria-label={'Interactive 3D walkthrough of ' + (ROOMS[state.currentRoom]?.name || 'the interior')
@@ -374,10 +387,10 @@ export default function Walkthrough({
       {/* wordmark + escape nav — the fixed-overlay tour has no site header, so the
           wordmark links home and a small row exits to the other routes. */}
       <div className="r3i-wordmark" style={{ position: 'fixed', top: 30, left: 38, zIndex: 11, pointerEvents: 'none' }}>
-        <a href="/" aria-label="Rahman 3D Interior — home" style={{ display: 'inline-block', textDecoration: 'none', pointerEvents: 'auto' }}>
+        <Link href="/" aria-label="Rahman 3D Interior — home" style={{ display: 'inline-block', textDecoration: 'none', pointerEvents: 'auto' }}>
           <div className="r3i-mark" style={{ fontFamily: "var(--font-serif),serif", fontWeight: 500, fontSize: 21, letterSpacing: '0.16em', color: BRAND.ink, lineHeight: 1 }}>{BRAND.wordmark}</div>
           <div className="r3i-tag" style={{ fontFamily: "var(--font-sans),sans-serif", fontWeight: 400, fontSize: 10, letterSpacing: '0.34em', textTransform: 'uppercase', color: 'rgba(43,38,32,.55)', marginTop: 7 }}>{BRAND.tagline}</div>
-        </a>
+        </Link>
         <div style={{ display: 'flex', gap: 16, marginTop: 12, pointerEvents: 'auto' }}>
           {[['↤ Home', '/'], ['Gallery', '/gallery']].map(([t, href]) => (
             <a key={href} href={href} style={{ fontFamily: "var(--font-sans),sans-serif", fontSize: 10, letterSpacing: '0.18em', textTransform: 'uppercase', color: BRAND.accent, textDecoration: 'none', borderBottom: `1px solid ${BRAND.accent}`, paddingBottom: 2 }}>{t}</a>
@@ -520,7 +533,7 @@ export default function Walkthrough({
           <h1 style={{ fontFamily: "var(--font-serif),serif", fontWeight: 500, fontSize: 'clamp(30px,5vw,54px)', maxWidth: '18ch', lineHeight: 1.1, margin: 0 }}>This tour moves with your scroll.</h1>
           <p style={{ fontFamily: "var(--font-sans),sans-serif", fontWeight: 300, fontSize: 14, color: 'rgba(43,38,32,.7)', maxWidth: '46ch', lineHeight: 1.6, margin: 0 }}>Your system prefers reduced motion, and this 3D walkthrough is camera-motion heavy. Enter only if you’re comfortable.</p>
           <button onClick={() => setMotionOk(true)} style={{ fontFamily: "var(--font-sans),sans-serif", fontWeight: 400, fontSize: 11, letterSpacing: '0.16em', textTransform: 'uppercase', padding: '12px 22px', borderRadius: 999, cursor: 'pointer', background: BRAND.ink, color: '#f3efe7', border: `1px solid ${BRAND.ink}` }}>Enter the tour</button>
-          <a href="/" style={{ fontFamily: "var(--font-sans),sans-serif", fontSize: 10, letterSpacing: '0.14em', textTransform: 'uppercase', color: BRAND.accent, textDecoration: 'none', borderBottom: `1px solid ${BRAND.accent}`, paddingBottom: 2 }}>Back to home</a>
+          <Link href="/" style={{ fontFamily: "var(--font-sans),sans-serif", fontSize: 10, letterSpacing: '0.14em', textTransform: 'uppercase', color: BRAND.accent, textDecoration: 'none', borderBottom: `1px solid ${BRAND.accent}`, paddingBottom: 2 }}>Back to home</Link>
         </div>
       )}
     </div>

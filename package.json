@@ -9,7 +9,7 @@
     "build": "node scripts/build.mjs",
     "build:next": "next build",
     "start": "next start",
-    "lint": "next lint",
+    "lint": "eslint .",
     "check": "node scripts/check.mjs",
     "vendor:decoders": "node scripts/vendor-decoders.mjs",
     "audit:path": "node scripts/audit-path.mjs",
@@ -24,5 +24,9 @@
     "react": "^19.2.7",
     "react-dom": "^19.2.7",
     "three": "^0.160.0"
+  },
+  "devDependencies": {
+    "eslint": "10.13.0",
+    "eslint-config-next": "16.4.3"
   }
 }

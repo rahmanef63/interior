@@ -97,11 +97,13 @@ export default function Editor() {
   // a canvas whose previous context was disposed — the rebuild throws "Cannot read
   // properties of null (reading 'precision')" and blanks the viewport. Same trap the
   // tour hit; same fix.
-  const contentSeenRef = useRef(content);
-  const canvasKeyRef = useRef(0);
-  if (contentSeenRef.current !== content) {
-    contentSeenRef.current = content;
-    canvasKeyRef.current += 1;
+  // Derive the canvas generation from content state, not a ref: React 19 forbids
+  // reading/writing refs during render.
+  const [canvasGen, setCanvasGen] = useState(0);
+  const [seenContent, setSeenContent] = useState(content);
+  if (seenContent !== content) {
+    setSeenContent(content);
+    setCanvasGen(canvasGen + 1);
   }
 
   // ---- engine lifecycle -----------------------------------------------
@@ -120,6 +122,7 @@ export default function Editor() {
       });
       engineRef.current = engine;
       engine.init();
+      // eslint-disable-next-line react-hooks/set-state-in-effect -- WebGL engine init is an external system; ready/err reflect it, not derived state
       setReady(true);
     } catch (e) {
       setErr('Could not start the 3D viewport: ' + e.message);
@@ -128,7 +131,6 @@ export default function Editor() {
       return undefined;
     }
     return () => { engine.dispose(); engineRef.current = null; };
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [content]);
 
   // The viewport owns the whole window; a scrollbar here would fight the wheel,
@@ -154,6 +156,7 @@ export default function Editor() {
   useEffect(() => {
     const q = new URLSearchParams(window.location.search);
     const p = q.get('p');
+    // eslint-disable-next-line react-hooks/set-state-in-effect -- reading window.location is external sync; the URL seed cannot be derived during render (SSR has no window)
     if (p) { setLoadSlug(p); return; }
     const u = UNIT_BY_KEY[q.get('unit')];
     if (u) setContent(u.content);
@@ -173,6 +176,7 @@ export default function Editor() {
   useEffect(() => {
     if (!loadSlug || loaded === undefined || appliedSlugRef.current === loadSlug) return;
     appliedSlugRef.current = loadSlug;
+    // eslint-disable-next-line react-hooks/set-state-in-effect -- applying a fetched Convex project is external sync
     if (loaded === null) { setErr('That project could not be found.'); return; }
     // Same trust boundary as every other import path. A stored bundle is not
     // automatically trustworthy: it may predate a contract change.
@@ -706,7 +710,7 @@ export default function Editor() {
         {/* centre: viewport */}
         <div ref={viewportRef} className="r3i-ed-view" style={{ position: 'relative', minWidth: 0, minHeight: 0, background: '#e9e3d8' }}>
           <canvas
-            key={canvasKeyRef.current}
+            key={canvasGen}
             ref={canvasRef}
             aria-label="3D viewport. Use the toolbar tools, or middle-drag to orbit and scroll to zoom."
             style={{ display: 'block', width: '100%', height: '100%', touchAction: 'none', cursor: cursorFor(st.tool) }}

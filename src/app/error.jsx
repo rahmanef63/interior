@@ -4,6 +4,7 @@
 // component (the whole tour is one) unmounts the tree and leaves a blank page
 // with no way back.
 import { INK, PAPER, ACCENT_TEXT, MUTED, label } from '../lib/tokens';
+import Link from 'next/link';
 
 export default function Error({ error, reset }) {
   return (
@@ -27,7 +28,7 @@ export default function Error({ error, reset }) {
       )}
       <div style={{ display: 'flex', gap: 10, flexWrap: 'wrap', justifyContent: 'center' }}>
         <button onClick={reset} style={btn(true)}>Try again</button>
-        <a href="/" style={{ ...btn(false), textDecoration: 'none' }}>Back to the plan</a>
+        <Link href="/" style={{ ...btn(false), textDecoration: 'none' }}>Back to the plan</Link>
       </div>
     </main>
   );
