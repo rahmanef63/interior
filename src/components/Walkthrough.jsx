@@ -387,7 +387,7 @@ export default function Walkthrough({
       {/* wordmark + escape nav — the fixed-overlay tour has no site header, so the
           wordmark links home and a small row exits to the other routes. */}
       <div className="r3i-wordmark" style={{ position: 'fixed', top: 30, left: 38, zIndex: 11, pointerEvents: 'none' }}>
-        <Link href="/" aria-label="Rahman 3D Interior — home" style={{ display: 'inline-block', textDecoration: 'none', pointerEvents: 'auto' }}>
+        <Link href="/" aria-label="Rahman 3D Interior home" style={{ display: 'inline-block', textDecoration: 'none', pointerEvents: 'auto' }}>
           <div className="r3i-mark" style={{ fontFamily: "var(--font-serif),serif", fontWeight: 500, fontSize: 21, letterSpacing: '0.16em', color: BRAND.ink, lineHeight: 1 }}>{BRAND.wordmark}</div>
           <div className="r3i-tag" style={{ fontFamily: "var(--font-sans),sans-serif", fontWeight: 400, fontSize: 10, letterSpacing: '0.34em', textTransform: 'uppercase', color: 'rgba(43,38,32,.55)', marginTop: 7 }}>{BRAND.tagline}</div>
         </Link>
@@ -414,7 +414,7 @@ export default function Walkthrough({
           {activeUnit ? activeUnit.name : 'Walk through your next space.'}
         </h1>
         <p style={{ position: 'relative', fontFamily: "var(--font-sans),sans-serif", fontWeight: 300, fontSize: 'clamp(14px,1.5vw,18px)', lineHeight: 1.6, color: 'rgba(43,38,32,.72)', margin: '30px auto 0', maxWidth: '48ch' }}>
-          {activeUnit ? activeUnit.blurb : 'Start with the floor plan. Scroll to descend through the entrance and orbit each room — switching its concept as you pass through.'}
+          {activeUnit ? activeUnit.blurb : 'Start with the floor plan. Scroll to descend through the entrance and orbit each room, switching its concept as you pass through.'}
         </p>
         <div style={{ position: 'relative', display: 'flex', flexDirection: 'column', alignItems: 'center', gap: 10, marginTop: 58 }}>
           <span style={{ fontFamily: "var(--font-sans),sans-serif", fontSize: 10, letterSpacing: '0.4em', textTransform: 'uppercase', color: 'rgba(43,38,32,.55)' }}>Scroll to enter</span>

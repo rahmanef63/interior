@@ -44,7 +44,7 @@ export default function SiteNav({ active = 'services', onHome = true }) {
         {onHome ? (
           <a
             href="#top"
-            aria-label={`${SITE_NAME} — home`}
+            aria-label={`${SITE_NAME} home`}
             style={{ ...label, fontSize: 'clamp(14px, 1.8vw, 17px)', letterSpacing: '.18em', color: INK, textDecoration: 'none', fontWeight: 500 }}
           >
             {SITE_NAME}
@@ -52,7 +52,7 @@ export default function SiteNav({ active = 'services', onHome = true }) {
         ) : (
           <Link
             href="/"
-            aria-label={`${SITE_NAME} — home`}
+            aria-label={`${SITE_NAME} home`}
             style={{ ...label, fontSize: 'clamp(14px, 1.8vw, 17px)', letterSpacing: '.18em', color: INK, textDecoration: 'none', fontWeight: 500 }}
           >
             {SITE_NAME}

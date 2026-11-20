@@ -106,7 +106,7 @@ export default function Editor() {
     setCanvasGen(canvasGen + 1);
   }
 
-  // ---- engine lifecycle -----------------------------------------------
+  // engine lifecycle
   useEffect(() => {
     if (!canvasRef.current) return undefined;
     let engine;
@@ -172,7 +172,7 @@ export default function Editor() {
     return () => window.removeEventListener('beforeunload', onBeforeUnload);
   }, [dirty]);
 
-  // ---- open a saved project -------------------------------------------
+  // open a saved project
   useEffect(() => {
     if (!loadSlug || loaded === undefined || appliedSlugRef.current === loadSlug) return;
     appliedSlugRef.current = loadSlug;
@@ -219,7 +219,7 @@ export default function Editor() {
     return () => { cancelled = true; };
   }, [pendingGlbUrl, content]);
 
-  // ---- keyboard --------------------------------------------------------
+  // keyboard
   useEffect(() => {
     const onKey = (e) => {
       const t = e.target;
@@ -244,7 +244,7 @@ export default function Editor() {
     setDialog({ ...opts, onDone: (v) => { setDialog(null); resolve(v); } });
   }), []);
 
-  // ---- scenes ----------------------------------------------------------
+  // scenes
   const addScene = useCallback(() => {
     const e = eng(); if (!e) return;
     clearMsgs();
@@ -266,7 +266,7 @@ export default function Editor() {
     if (!r.ok) setErr(r.reason);
   }, [clearMsgs]);
 
-  // ---- model -----------------------------------------------------------
+  // model
   const onPickFile = useCallback(async (ev) => {
     const file = ev.target.files && ev.target.files[0];
     ev.target.value = '';
@@ -303,7 +303,7 @@ export default function Editor() {
     e.clearImportedModel();
   }, [clearMsgs]);
 
-  // ---- project CRUD ----------------------------------------------------
+  // project CRUD
   const currentBundle = useCallback(() => {
     const e = eng();
     return e ? buildBundle(e.exportProject()) : null;
@@ -496,7 +496,7 @@ export default function Editor() {
     downloadText((projName || 'walkthrough').replace(/\s+/g, '-').toLowerCase() + '.json', JSON.stringify(b, null, 2));
   }, [currentBundle, projName]);
 
-  // ---- derived ---------------------------------------------------------
+  // derived
   const activeTool = TOOLBAR.find((t) => t.tool === st.tool) || TOOLBAR[1];
   const sel = st.scenes[st.selScene];
   const selHs = (st.hotspots || []).find((h) => h.i === st.selHotspot) || null;
@@ -513,7 +513,7 @@ export default function Editor() {
         background: PAPER, color: INK, fontFamily: 'var(--font-sans), sans-serif',
       }}
     >
-      {/* ─────────────── toolbar ─────────────── */}
+      {/* toolbar */}
       <header style={{ borderBottom: `1px solid ${HAIR}`, display: 'flex', alignItems: 'center', gap: 14, padding: '8px 12px', flexWrap: 'wrap' }}>
         <Link href="/" style={{ ...label, fontSize: 12, letterSpacing: '.16em', color: INK, textDecoration: 'none', fontWeight: 500 }}>
           Rahman 3D
@@ -590,7 +590,7 @@ export default function Editor() {
         </button>
       </header>
 
-      {/* ─────────────── body ─────────────── */}
+      {/* body */}
       {/* Three columns on a desktop; stacked with the viewport on top below
           900 px. A CAD layout cannot honestly become a phone layout — 472 px of
           side panels on a 390 px screen left the viewport with negative width —
@@ -940,7 +940,7 @@ export default function Editor() {
         </aside>
       </div>
 
-      {/* ─────────────── status bar ─────────────── */}
+      {/* status bar */}
       <footer
         style={{
           borderTop: `1px solid ${HAIR}`, padding: '7px 12px', display: 'flex',

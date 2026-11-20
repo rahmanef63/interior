@@ -33,7 +33,7 @@ export default function Page() {
 
       <span id="top" />
 
-      {/* ============================ HERO ============================ */}
+      {/* HERO */}
       <section
         aria-label="Introduction"
         style={{
@@ -121,7 +121,7 @@ export default function Page() {
             }}
           >
             Every listing already has a 360: you stand on one spot and turn.
-            These are apartments you walk — studio to three-bedroom, entrance to
+            These are apartments you walk, from studio to three-bedroom, entrance to
             window, in a browser tab. No app, no headset, no download.
           </p>
           <Link
@@ -144,7 +144,7 @@ export default function Page() {
         </div>
       </section>
 
-      {/* ============================ SERVICES ============================ */}
+      {/* SERVICES */}
       <section
         id="services"
         aria-label="The experience"
@@ -204,7 +204,7 @@ export default function Page() {
         </div>
       </section>
 
-      {/* ============================ SELECTED WORK ============================ */}
+      {/* SELECTED WORK */}
       <section
         id="work"
         aria-label="Selected work"
@@ -324,7 +324,7 @@ export default function Page() {
         </div>
       </section>
 
-      {/* ============================ STUDIO ============================ */}
+      {/* STUDIO */}
       <section
         id="studio"
         aria-label="About"
@@ -388,7 +388,7 @@ export default function Page() {
             }}
           >
             It treats a room like a{' '}
-            <span style={{ fontStyle: 'italic', color: ACCENT }}>drawing</span> — every
+            <span style={{ fontStyle: 'italic', color: ACCENT }}>drawing</span>: every
             wall, join, and fall of light placed on purpose, then rendered until it
             stops feeling like a demo and starts feeling like a place.
           </p>
@@ -403,14 +403,14 @@ export default function Page() {
               marginTop: 'clamp(22px, 3vh, 36px)',
             }}
           >
-            Rahman 3D Interior is a showcase, not a firm — a hand-built three.js
+            Rahman 3D Interior is a showcase, not a firm: a hand-built three.js
             walkthrough by Rahman that turns a floor plan into a space you can move
             through, restyle, and share. Made to be explored, not sold.
           </p>
         </div>
       </section>
 
-      {/* ============================ APPROACH (inverted ink ground) ============================ */}
+      {/* APPROACH (inverted ink ground) */}
       <section
         id="approach"
         aria-label="How it works"
@@ -494,7 +494,7 @@ export default function Page() {
         </ol>
       </section>
 
-      {/* ============================ CREDO ============================ */}
+      {/* CREDO */}
       <section
         aria-label="Studio credo"
         style={{ padding: `clamp(80px, 14vh, 170px) ${sheetX}`, borderBottom: `1px solid ${HAIR}` }}
@@ -514,8 +514,8 @@ export default function Page() {
               }}
             >
               A space you can{' '}
-              <span style={{ fontStyle: 'italic' }}>walk</span> — and restyle as you
-              move through it — lands differently than a render you only look at.
+              <span style={{ fontStyle: 'italic' }}>walk</span>, and restyle as you
+              move through it, lands differently than a render you only look at.
             </p>
           </blockquote>
           <figcaption
@@ -537,7 +537,7 @@ export default function Page() {
         </figure>
       </section>
 
-      {/* ============================ CTA — TOUR ============================ */}
+      {/* CTA: TOUR */}
       <section
         aria-label="Enter the 3D walkthrough"
         style={{

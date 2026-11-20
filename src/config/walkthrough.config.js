@@ -1,4 +1,3 @@
-// =====================================================================
 //  Walkthrough configuration — the single place to author a project.
 //  Everything here is plain data (no three.js), safe to import anywhere.
 //
@@ -8,7 +7,6 @@
 //  Author the path visually in /editor (Scenes), or measure it headlessly with
 //    node scripts/audit-path.mjs --suggest
 //  which raycasts every waypoint and reports what the frame actually contains.
-// =====================================================================
 
 /** @typedef {{ pos:[number,number,number], look:[number,number,number], room:number }} Waypoint */
 

@@ -7,7 +7,7 @@ import { INK, PAPER, ACCENT, MUTED, HAIR, label } from '../../lib/tokens.js';
 
 export const metadata = {
   title: 'Privacy',
-  description: 'What interior.rahmanef.com stores, how usage is measured, and how to delete your data — no cookies, no third-party trackers.',
+  description: 'What interior.rahmanef.com stores, how usage is measured, and how to delete your data: no cookies, no third-party trackers.',
 };
 
 const serif = { fontFamily: "var(--font-serif), serif" };
@@ -34,8 +34,8 @@ const CLAUSES = [
     no: '02',
     t: 'What we store',
     body: [
-      'Account: if you create an account we store your email address and a securely hashed password — nothing else. No name, no phone number, no payment details.',
-      'Projects you save: when you save a walkthrough to your account we store its name, its design settings, and — only if you upload one — your 3D model file (.glb). These are tied to your account and are visible only to you unless you share them or the studio features them (see “Sharing & public exposure”).',
+      'Account: if you create an account we store your email address and a securely hashed password, nothing else. No name, no phone number, no payment details.',
+      'Projects you save: when you save a walkthrough to your account we store its name, its design settings, and (only if you upload one) your 3D model file (.glb). These are tied to your account and are visible only to you unless you share them or the studio features them (see “Sharing & public exposure”).',
       'Guest work: if you use the tour without signing in, your work is kept only in your own browser (localStorage). It never reaches our servers until you sign in and choose “Save to cloud”. Clearing your browser data erases it.',
     ],
   },
@@ -52,7 +52,7 @@ const CLAUSES = [
     t: 'Cookies & third-party trackers',
     body: [
       'This site sets no cookies and loads no third-party analytics, advertising, or social scripts. Fonts are served from the site itself, so simply viewing a page never hands your IP address to an outside font CDN.',
-      'Your login session is kept as a token in your browser’s localStorage — not in a cookie. Because there are no cookies or cross-site trackers, there is no consent banner.',
+      'Your login session is kept as a token in your browser’s localStorage, not in a cookie. Because there are no cookies or cross-site trackers, there is no consent banner.',
     ],
   },
   {

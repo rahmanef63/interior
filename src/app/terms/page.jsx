@@ -7,7 +7,7 @@ import { INK, PAPER, ACCENT, MUTED, HAIR, label } from '../../lib/tokens.js';
 
 export const metadata = {
   title: 'Terms',
-  description: 'The terms for using interior.rahmanef.com — a personal 3D-interior showcase provided as-is, with an acceptable-use policy for uploads.',
+  description: 'The terms for using interior.rahmanef.com, a personal 3D-interior showcase provided as-is, with an acceptable-use policy for uploads.',
 };
 
 const serif = { fontFamily: "var(--font-serif), serif" };
@@ -35,7 +35,7 @@ const CLAUSES = [
     t: 'As-is, no warranty',
     body: [
       'The site is a personal showcase provided “as is” and “as available”, without warranties of any kind. It may change, break, lose data, or go offline at any time, and the owner is not liable for any loss arising from its use.',
-      'Keep your own copy of anything important — use the “Export” buttons to download your project file or 3D model.',
+      'Keep your own copy of anything important. Use the “Export” buttons to download your project file or 3D model.',
     ],
   },
   {
@@ -60,12 +60,12 @@ const CLAUSES = [
   {
     no: '05',
     t: 'Public exposure',
-    body: ['Share links are unlisted but public — anyone with the link can view them — and featured projects appear on the public gallery. Don’t upload anything you wouldn’t want seen publicly.'],
+    body: ['Share links are unlisted but public, meaning anyone with the link can view them, and featured projects appear on the public gallery. Don’t upload anything you wouldn’t want seen publicly.'],
   },
   {
     no: '06',
     t: 'The owner may remove content',
-    body: ['The owner may remove, unfeature, or decline any content, and may suspend accounts, at any time and for any reason — in particular anything that breaks these terms — without notice.'],
+    body: ['The owner may remove, unfeature, or decline any content, and may suspend accounts, at any time and for any reason, in particular anything that breaks these terms, without notice.'],
   },
   {
     no: '07',

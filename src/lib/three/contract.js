@@ -1,4 +1,3 @@
-// =====================================================================
 //  Rahman 3D Interior walkthrough — project-bundle export/import contract.
 //
 //  A "project" is the plain-data content that authors a 3D walkthrough
@@ -15,7 +14,6 @@
 //      accent, metal, stone) — see walkthroughEngine.colorOf(room, role).
 //
 //  No new dependencies. Plain ES module. JSDoc types (no TypeScript).
-// =====================================================================
 
 /**
  * @typedef {[number, number, number]} Vec3
@@ -123,7 +121,7 @@ export const PROJECT_LIMITS = { maxBytes: 4 * 1024 * 1024 };
  *  .glb only: self-contained, cannot reference external buffer/image URIs. */
 export const MODEL_LIMITS = { maxBytes: 10 * 1024 * 1024 };
 
-// ---- internal constants (not exported) ------------------------------
+// internal constants (not exported)
 
 /** The 7 semantic roles a concept palette must define (referenced by geometry). */
 export const PAL_ROLES = ['wall', 'rug', 'uph', 'wood', 'accent', 'metal', 'stone'];
@@ -150,9 +148,7 @@ const HEX_RE = /^#([0-9a-f]{3}|[0-9a-f]{6})$/i;
 /** Lowercase slug, used for keys that select built-in content. */
 const SLUG_RE = /^[a-z0-9][a-z0-9-]{0,31}$/;
 
-// ---------------------------------------------------------------------
 //  buildBundle
-// ---------------------------------------------------------------------
 
 /**
  * Wrap a content object in the versioned export envelope.
@@ -173,9 +169,7 @@ export function buildBundle(content) {
   };
 }
 
-// ---------------------------------------------------------------------
 //  validateProject
-// ---------------------------------------------------------------------
 
 /**
  * Validate an imported project (full bundle OR bare content object).
@@ -223,7 +217,7 @@ export function validateProject(input) {
       if (!(k in content)) errors.push(`missing required key: ${k}`);
     }
 
-    // ---- config -----------------------------------------------------
+    // config
     if ('config' in content) {
       const cfg = content.config;
       if (!isObj(cfg)) {
@@ -283,7 +277,7 @@ export function validateProject(input) {
       }
     }
 
-    // ---- CONCEPTS ---------------------------------------------------
+    // CONCEPTS
     eachCapped(content.CONCEPTS, 'CONCEPTS', CAPS.concepts, errors, (cpt, p) => {
       if (!isObj(cpt)) { errors.push(`${p}: expected an object`); return; }
       str(cpt.name, `${p}.name`, errors);
@@ -295,14 +289,14 @@ export function validateProject(input) {
     });
     if (Array.isArray(content.CONCEPTS) && content.CONCEPTS.length < 1) errors.push('CONCEPTS: must have at least one concept');
 
-    // ---- ROOMS ------------------------------------------------------
+    // ROOMS
     eachCapped(content.ROOMS, 'ROOMS', CAPS.rooms, errors, (room, p) => {
       if (!isObj(room)) { errors.push(`${p}: expected an object`); return; }
       str(room.name, `${p}.name`, errors);
     });
     if (Array.isArray(content.ROOMS) && content.ROOMS.length < 1) errors.push('ROOMS: must have at least one room');
 
-    // ---- PLAN -------------------------------------------------------
+    // PLAN
     eachCapped(content.PLAN, 'PLAN', CAPS.plan, errors, (pin, p) => {
       if (!isObj(pin)) { errors.push(`${p}: expected an object`); return; }
       finite(pin.x, `${p}.x`, errors);
@@ -310,7 +304,7 @@ export function validateProject(input) {
       str(pin.name, `${p}.name`, errors);
     });
 
-    // ---- HOTSPOTS ---------------------------------------------------
+    // HOTSPOTS
     eachCapped(content.HOTSPOTS, 'HOTSPOTS', CAPS.hotspots, errors, (h, p) => {
       if (!isObj(h)) { errors.push(`${p}: expected an object`); return; }
       roomIndex(h.room, `${p}.room`, content.ROOMS, errors);
@@ -321,12 +315,12 @@ export function validateProject(input) {
       str(h.meta, `${p}.meta`, errors);
     });
 
-    // ---- ROOM_COLORS ------------------------------------------------
+    // ROOM_COLORS
     eachCapped(content.ROOM_COLORS, 'ROOM_COLORS', CAPS.room_colors, errors, (c, p) => {
       hex(c, p, errors);
     });
 
-    // ---- DAYLIGHT ---------------------------------------------------
+    // DAYLIGHT
     if ('DAYLIGHT' in content) {
       const dl = content.DAYLIGHT;
       if (!isObj(dl)) {
@@ -347,7 +341,7 @@ export function validateProject(input) {
       }
     }
 
-    // ---- BRAND ------------------------------------------------------
+    // BRAND
     if ('BRAND' in content) {
       const br = content.BRAND;
       if (!isObj(br)) {
@@ -376,9 +370,7 @@ export function validateProject(input) {
   }
 }
 
-// ---------------------------------------------------------------------
 //  internal validators (pure, side-effect = push to errors)
-// ---------------------------------------------------------------------
 
 /** @param {unknown} v @returns {v is Record<string, unknown>} */
 function isObj(v) {
@@ -495,9 +487,7 @@ function eachCapped(arr, name, cap, errors, fn) {
   arr.forEach((item, i) => fn(item, `${name}[${i}]`));
 }
 
-// ---------------------------------------------------------------------
 //  demo — runnable self-check
-// ---------------------------------------------------------------------
 
 /**
  * Run assert-based self-checks: a valid bundle passes, and a tampered
@@ -570,7 +560,7 @@ export function demo() {
     assert.ok(r.errors.length > 0, `expected errors for: ${label}`);
   };
 
-  // ---- guards added in 1.1.0 (each of these used to slip through) ----
+  // guards added in 1.1.0 (each of these used to slip through)
   fails('single waypoint (engine divides by N-1)', (c) => { c.config.waypoints = [c.config.waypoints[0]]; });
   fails('zero waypoints', (c) => { c.config.waypoints = []; });
   fails('fov zero', (c) => { c.config.fov = 0; });

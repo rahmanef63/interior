@@ -37,7 +37,7 @@ export const EXPERIENCE = [
     no: '01',
     t: 'Walk the Unit',
     spec: 'Scroll to move · nothing to learn',
-    note: 'The camera descends from the floor plan and walks the apartment — entrance, kitchen, living, bedrooms. A 360 puts you on a tripod point; this takes you through the door.',
+    note: 'The camera descends from the floor plan and walks the apartment: entrance, kitchen, living, bedrooms. A 360 puts you on a tripod point; this takes you through the door.',
   },
   {
     no: '02',
@@ -49,13 +49,13 @@ export const EXPERIENCE = [
     no: '03',
     t: 'Switch the Concept',
     spec: CONCEPT_NAMES.join(' · '),
-    note: 'Retint a whole room’s materials to a different design scheme in real time, as you pass through it — and change the daylight from Soft to Dusk while you are there.',
+    note: 'Retint a whole room’s materials to a different design scheme in real time as you pass through it, and change the daylight from Soft to Dusk while you are there.',
   },
   {
     no: '04',
     t: 'Bring Your Own',
     spec: 'Upload · save · share',
-    note: 'Drop in your own .glb — a unit baked in Blender, say — set your own camera path in the editor, save it to an account, and share an unlisted link.',
+    note: 'Drop in your own .glb (for example, a unit baked in Blender), set your own camera path in the editor, save it to an account, and share an unlisted link.',
   },
 ];
 
@@ -93,8 +93,8 @@ export const ABOUT_FACTS = [
 /** §05 How it works. */
 export const STEPS = [
   { n: '01', t: 'Scroll', d: 'The page scroll is the walk. Start on the floor plan, descend through the entrance, and move room to room.' },
-  { n: '02', t: 'Compare', d: 'Switch unit type mid-tour — studio, one, two or three bed — and see the same walk through a different plan.' },
-  { n: '03', t: 'Bring', d: 'Upload your own .glb — a unit baked in Blender, within the size and complexity limits — and it takes the shell’s place.' },
+  { n: '02', t: 'Compare', d: 'Switch unit type mid-tour (studio, one, two or three bed) and see the same walk through a different plan.' },
+  { n: '03', t: 'Bring', d: 'Upload your own .glb, such as a unit baked in Blender within the size and complexity limits, and it takes the shell’s place.' },
   { n: '04', t: 'Share', d: 'Set the camera path in the editor, save to an account, and copy an unlisted link. Anyone can open it and walk it.' },
 ];
 

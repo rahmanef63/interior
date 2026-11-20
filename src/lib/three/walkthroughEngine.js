@@ -1,4 +1,3 @@
-// =====================================================================
 //  WalkthroughEngine — headless orchestrator for the scroll-driven 3D
 //  interior walkthrough. Three.js is INJECTED (constructor `THREE`), so the
 //  same engine runs under any host: a Next.js client component, the DC demo,
@@ -26,7 +25,6 @@
 //    const engine = new WalkthroughEngine({ THREE, canvas, refs, content, options, onState });
 //    engine.init();                 // build + start
 //    engine.dispose();              // full teardown
-// =====================================================================
 
 import { addLights, fitLights } from './lights.js';
 import { createBuilders } from './builders.js';
@@ -79,7 +77,7 @@ export class WalkthroughEngine {
     this.importedModel = null;     // currently imported glTF root, if any (truthy ⇒ primitives hidden)
   }
 
-  // ---------- small helpers ----------
+  // small helpers
   maxScroll() {
     const se = document.scrollingElement || document.documentElement;
     return Math.max(1, se.scrollHeight - se.clientHeight);
@@ -132,7 +130,7 @@ export class WalkthroughEngine {
     });
   }
 
-  // ---------- public API ----------
+  // public API
   goRoom(i) {
     const idx = roomAnchorIndex(this.config.waypoints, i);
     window.scrollTo({ top: waypointScroll(this.config, idx) * this.maxScroll(), behavior: 'smooth' });
@@ -167,7 +165,7 @@ export class WalkthroughEngine {
     this.invalidate(120);
   }
 
-  // ---------- build ----------
+  // build
   // One-shot per instance: the React host constructs a fresh engine (and a fresh
   // canvas) for every project change, so there is no re-init path.
   init() {
@@ -240,14 +238,14 @@ export class WalkthroughEngine {
     this.kickLoop();
   }
 
-  // ---------- loop control ----------
+  // loop control
   kickLoop() {
     if (!this._loop) this._loop = () => this.frame();
     cancelAnimationFrame(this._raf);
     this._raf = requestAnimationFrame(this._loop);
   }
 
-  // ---------- events ----------
+  // events
   bindEvents() {
     const onResize = () => {
       this.camera.aspect = window.innerWidth / window.innerHeight;
@@ -401,7 +399,7 @@ export class WalkthroughEngine {
     this.renderer.render(this.scene, cam);
   }
 
-  // ---------- 3D model import / export (see lib/three/contract.js) ----------
+  // 3D model import / export (see lib/three/contract.js)
   // Snapshot the live project (the 8 contract PROJECT_KEYS) as plain data.
   // The host wraps this with buildBundle() before download.
   exportProject() {
@@ -493,7 +491,7 @@ export class WalkthroughEngine {
     });
   }
 
-  // ---------- teardown ----------
+  // teardown
   // The host builds a fresh engine per project change, so every allocation made
   // in init() has to go here. Previously only the renderers were released: all the
   // scene geometry/materials and the particle buffer

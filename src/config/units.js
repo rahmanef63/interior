@@ -1,4 +1,3 @@
-// =====================================================================
 //  The showroom — four apartment types, described as data.
 //
 //  Every listing portal already does a 360 photosphere: you stand on a tripod
@@ -52,7 +51,6 @@
 //  Geometry conventions (see lib/three/apartment.js):
 //    x ∈ [0, w], z ∈ [0, d]; z = 0 is the entrance side, z = d is the facade,
 //    and the balcony sits beyond z = d. Every coordinate is metres.
-// =====================================================================
 
 import { CONCEPTS, DAYLIGHT, BRAND } from './walkthrough.config.js';
 
@@ -88,12 +86,10 @@ function unit({ key, name, area, beds, tagline, blurb, spec, plan, rooms, waypoi
   };
 }
 
-// ---------------------------------------------------------------------
 //  Tipe Studio · 24 m² (20 m² indoor + 4 m² balkon)
 //  3.6 m of facade. Wet core at the door, pantry down one wall, bed at the
 //  window. No sofa and no island: at this size the bed is the seating and the
 //  pantry is two burners and a sink.
-// ---------------------------------------------------------------------
 const STUDIO = unit({
   key: 'studio',
   name: 'Tipe Studio',
@@ -177,12 +173,10 @@ const STUDIO = unit({
   ],
 });
 
-// ---------------------------------------------------------------------
 //  Tipe 1 Kamar · 33 m² (28 m² indoor + 5 m² balkon)
 //  4.2 m of facade. Bedroom on one side with a corridor past it, so you do not
 //  walk through the bedroom to reach the living room — the mistake the first
 //  draft of this plan made.
-// ---------------------------------------------------------------------
 const ONE_BED = unit({
   key: 'one-bed',
   name: 'Tipe 1 Kamar',
@@ -263,14 +257,12 @@ const ONE_BED = unit({
   ],
 });
 
-// ---------------------------------------------------------------------
 //  Tipe 2 Kamar · 43 m² (40 m² indoor + 3.6 m² balkon)
 //  6.0 m of facade. Both bedrooms stacked down the west side, service core at
 //  the door, and an east strip that runs hall → kitchen → living → balcony.
 //  Both bedrooms are shot from their doorways: a 2.9 m room with a 1.6 m bed in
 //  it has nowhere for a camera to stand, and pretending otherwise is how you get
 //  a shot of a wardrobe door.
-// ---------------------------------------------------------------------
 const TWO_BED = unit({
   key: 'two-bed',
   name: 'Tipe 2 Kamar',
@@ -356,12 +348,10 @@ const TWO_BED = unit({
   ],
 });
 
-// ---------------------------------------------------------------------
 //  Tipe 3 Kamar · 62 m² (58 m² indoor + 4.3 m² balkon)
 //  7.2 m of facade and a central corridor with three doors off it — the plan
 //  every family-sized Indonesian unit converges on. Living and kitchen take the
 //  whole facade end.
-// ---------------------------------------------------------------------
 const THREE_BED = unit({
   key: 'three-bed',
   name: 'Tipe 3 Kamar',

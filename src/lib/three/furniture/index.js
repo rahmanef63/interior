@@ -1,4 +1,3 @@
-// =====================================================================
 //  The furniture registry.
 //
 //  One folder per kind of thing, variations inside it:
@@ -29,7 +28,6 @@
 //  and they are in users' accounts. LEGACY maps every old name onto its new
 //  home, so an old plan keeps building exactly the geometry it built before.
 //  Nothing here may ever remove one of those rows.
-// =====================================================================
 
 import { makeKit, spec } from './shared.js';
 

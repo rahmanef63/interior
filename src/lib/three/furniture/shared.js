@@ -1,4 +1,3 @@
-// =====================================================================
 //  The kit every furniture variant is drawn with.
 //
 //  A variant is a plain function `(K, s) => void`:
@@ -13,7 +12,6 @@
 //  AUTHORING CONVENTION, and it is load-bearing: every piece is drawn FACING
 //  +z with its back at −z, centred on (0,0), then placed and turned by `ry`.
 //  Offsets from the piece's own centre go through R() so they turn with it.
-// =====================================================================
 
 /**
  * Rotate a local offset (dx,dz) into world space by `ry`.

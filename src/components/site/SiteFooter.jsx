@@ -104,7 +104,7 @@ export default function SiteFooter() {
           paddingTop: 'clamp(20px, 3vh, 30px)',
         }}
       >
-        <p style={fine}>© 2026 {SITE_NAME} — All rights reserved</p>
+        <p style={fine}>© 2026 {SITE_NAME} · All rights reserved</p>
         <nav aria-label="Legal" style={{ display: 'flex', gap: 'clamp(14px, 2vw, 24px)', flexWrap: 'wrap' }}>
           <Link href="/privacy" style={{ ...fine, textDecoration: 'none' }}>Privacy</Link>
           <Link href="/terms" style={{ ...fine, textDecoration: 'none' }}>Terms</Link>
